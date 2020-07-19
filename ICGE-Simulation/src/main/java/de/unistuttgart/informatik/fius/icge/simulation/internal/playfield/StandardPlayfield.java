@@ -94,7 +94,9 @@ public class StandardPlayfield implements Playfield {
             }
         }
         try {
-            this.drawablesChangedListener.accept(drawables);
+            if (this.drawablesChangedListener != null) {
+                this.drawablesChangedListener.accept(drawables);
+            }
         } catch (@SuppressWarnings("unused") final IllegalStateException e) {
             //If we are not attached to a simultion we do not need to draw anything
         }
@@ -210,7 +212,10 @@ public class StandardPlayfield implements Playfield {
         );
         this.findNodeForEntity(entity, true).appendChild(newNode);
         
-        this.simulationTreeEntityAddedListener.accept(newNode, entity);
+        if (this.simulationTreeEntityAddedListener != null) {
+            // TODO check for bugs with simulation tree when window is reattached or attached late
+            this.simulationTreeEntityAddedListener.accept(newNode, entity);
+        }
     }
     
     @Override
@@ -257,7 +262,10 @@ public class StandardPlayfield implements Playfield {
         for (final SimulationTreeNode child : node.getChildren()) {
             if (child.getElementId().equals(Integer.toHexString(entity.hashCode()))) {
                 node.removeChild(child);
-                this.simulationTreeEntityRemovedListener.accept(child);
+                if (this.simulationTreeEntityRemovedListener != null) {
+                    // TODO check for bugs with simulation tree when window is reattached or attached late
+                    this.simulationTreeEntityRemovedListener.accept(child);
+                }
             }
         }
     }
@@ -324,6 +332,13 @@ public class StandardPlayfield implements Playfield {
     }
     
     /**
+     * Remove the listener for when an entity is added to the simulation tree.
+     */
+    public void removeSimulationTreeEntityAddedListener() {
+        this.simulationTreeEntityAddedListener = null;
+    }
+    
+    /**
      * Set the listener for when an entity is removed from the simulation tree.
      *
      * @param listener
@@ -333,6 +348,13 @@ public class StandardPlayfield implements Playfield {
         if ((this.simulationTreeEntityRemovedListener == null) || (listener == null)) {
             this.simulationTreeEntityRemovedListener = listener;
         } else throw new ListenerSetException();
+    }
+    
+    /**
+     * Remove the listener for when an entity is removed from the simulation tree.
+     */
+    public void removeSimulationTreeEntityRemovedListener() {
+        this.simulationTreeEntityRemovedListener = null;
     }
     
     /**
@@ -346,6 +368,14 @@ public class StandardPlayfield implements Playfield {
         if ((this.drawablesChangedListener == null) || (listener == null)) {
             this.drawablesChangedListener = listener;
         } else throw new ListenerSetException();
+    }
+    
+    /**
+     * Remove the listener for when the drawables on the playfield changed. This listener is responsible for informing
+     * the UI.
+     */
+    public void removeDrawablesChangedListener() {
+        this.drawablesChangedListener = null;
     }
     
     @Override
