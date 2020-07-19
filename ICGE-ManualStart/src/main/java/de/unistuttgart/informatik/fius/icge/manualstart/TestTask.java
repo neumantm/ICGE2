@@ -30,7 +30,7 @@ public class TestTask implements Task {
                 tE.turnClockWise();
             }
         } catch (final Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 }
