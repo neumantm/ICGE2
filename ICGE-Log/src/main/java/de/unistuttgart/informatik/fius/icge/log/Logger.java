@@ -1,7 +1,7 @@
 /*
  * This source file is part of the FIUS ICGE project.
  * For more information see github.com/FIUS/ICGE2
- * 
+ * sad
  * Copyright (c) 2019 the ICGE project authors.
  * 
  * This software is available under the MIT license.
@@ -33,7 +33,8 @@ public abstract class Logger {
     private static OutputStreamMultiplier errorStream;
     
     // This block intercepts {@link System.out} and {@link System.err}
-    static {Logger.outStream = new OutputStreamMultiplier();
+    static {
+        Logger.outStream = new OutputStreamMultiplier();
         Logger.outStream.addOutputStream(System.out);
         Logger.out = new PrintStream(Logger.outStream);
         System.setOut(Logger.out);
