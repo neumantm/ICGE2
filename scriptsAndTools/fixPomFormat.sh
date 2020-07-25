@@ -15,6 +15,8 @@ if ! which xmlstarlet >/dev/null 2>&1 ;then
   fail "Need program xmlstarlet" 3
 fi
 
+exit 1
+
 operation='mv "{}.2" "{}"'
 
 bash "$dir/internalOrCiOnly/formatPomsAndRunOperation.sh" "--i-know-what-i-am-doing" "$operation"
