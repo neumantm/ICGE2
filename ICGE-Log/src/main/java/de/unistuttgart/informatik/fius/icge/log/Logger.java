@@ -33,8 +33,7 @@ public abstract class Logger {
     private static OutputStreamMultiplier errorStream;
     
     // This block intercepts {@link System.out} and {@link System.err}
-    static {
-        Logger.outStream = new OutputStreamMultiplier();
+    static {Logger.outStream = new OutputStreamMultiplier();
         Logger.outStream.addOutputStream(System.out);
         Logger.out = new PrintStream(Logger.outStream);
         System.setOut(Logger.out);
