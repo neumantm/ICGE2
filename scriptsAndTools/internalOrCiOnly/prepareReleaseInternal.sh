@@ -52,12 +52,10 @@ if ! git commit -m "Prepare for development on $newVersion" "**pom.xml" >/dev/nu
 fi
 
 if [ "$3" == "true" ] ;then
-  git push --set-upstream origin "$branchName" >/dev/null
-  git push origin "$version" >/dev/null
+  git push --set-upstream origin "$branchName" >/dev/null 2>&1
+  git push origin "$version" >/dev/null 2>&1
 
-  echo "4:$4"
   if [ "$4" == "true" ] ;then
-    echo "4444"
     git checkout master >/dev/null
     git branch -D "$branchName" >/dev/null
   fi
